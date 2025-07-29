@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const resourcesContainer = document.getElementById('resources-container');
     const paginationContainer = document.getElementById('pagination-container');
     
+    // --- DEFINE THE LIVE BACKEND URL ---
+    const API_BASE_URL = 'https://msomi-backend.onrender.com';
+
     // --- SEARCH BAR SETUP ---
     const searchBar = document.createElement('div');
     searchBar.className = 'search-bar';
@@ -113,7 +116,8 @@ document.addEventListener('DOMContentLoaded', function() {
         paginationContainer.innerHTML = '';
 
         try {
-            const response = await fetch(`https://msomi-backend.onrender.com`);
+            // --- FIX: Corrected URL for fetching resources ---
+            const response = await fetch(`${API_BASE_URL}/api/resources?page=${page}&limit=6`);
             if (!response.ok) {
                 const err = await response.json();
                 throw new Error(err.error || 'Failed to fetch resources');
@@ -135,20 +139,25 @@ document.addEventListener('DOMContentLoaded', function() {
         resources.forEach(resource => {
             const card = document.createElement('div');
             card.className = 'document-card';
-            // --- CHANGE: Added average rating and made the card clickable ---
             card.innerHTML = `
                 <h3>${resource.title}</h3>
-                <p>Code: ${resource.description}</p>
+                <p>Description: ${resource.description}</p>
                 <p>Category: ${resource.category?.name || 'N/A'}</p>
                 <p>Uploaded by: ${resource.uploadedBy?.name || 'Unknown'}</p>
-                <p><strong>Rating: ${resource.averageRating} / 5</strong></p>
+                <p><strong>Rating: ${resource.averageRating || 0} / 5</strong></p>
+                <button class="download-btn" data-id="${resource._id}" data-filename="${resource.fileName}">Download</button>
             `;
-            // Make the entire card a link to the detail page
-            card.style.cursor = 'pointer';
-            card.addEventListener('click', () => {
-                window.location.href = `ResourceDetail.html?resourceId=${resource._id}`;
+            // Make the text part of the card a link to the detail page
+            card.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'BUTTON') { // Don't navigate if the download button was clicked
+                    window.location.href = `ResourceDetail.html?resourceId=${resource._id}`;
+                }
             });
             resourcesContainer.appendChild(card);
+        });
+
+        document.querySelectorAll('.download-btn').forEach(button => {
+            button.addEventListener('click', handleDownload);
         });
     }
 
@@ -174,10 +183,38 @@ document.addEventListener('DOMContentLoaded', function() {
         paginationContainer.appendChild(nextButton);
     }
     
+    async function handleDownload(event) {
+        const resourceId = event.target.getAttribute('data-id');
+        const filename = event.target.getAttribute('data-filename');
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/resources/${resourceId}/download`, {
+                credentials: 'include'
+            });
+            if (!response.ok) {
+                const errData = await response.json();
+                throw new Error(errData.error || 'Download failed');
+            }
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            a.remove();
+        } catch (error) {
+            console.error('Download error:', error);
+            alert(`Error: ${error.message}`);
+        }
+    }
+
     // --- LOGOUT AND SEARCH FUNCTIONS ---
     async function logout() {
         try {
-            await fetch('https://msomi-backend.onrender.com', {
+            // --- FIX: Corrected URL for logout ---
+            await fetch(`${API_BASE_URL}/api/auth/logout`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
@@ -207,7 +244,8 @@ document.addEventListener('DOMContentLoaded', function() {
         searchResultsContainer.style.display = 'block';
         
         try {
-            const response = await fetch(`https://msomi-backend.onrender.com`);
+            // --- FIX: Corrected URL for search ---
+            const response = await fetch(`${API_BASE_URL}/api/resources/search?q=${encodeURIComponent(query)}`);
             const results = await response.json();
             searchResultsContainer.innerHTML = ''; 
             if (!response.ok) throw new Error(results.error || 'Search failed');
@@ -219,7 +257,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     const resultDiv = document.createElement('div');
                     resultDiv.style = "padding: 10px; border-bottom: 1px solid #ddd; cursor: pointer;";
                     resultDiv.textContent = `${result.title} - ${result.description}`;
-                    // --- CHANGE: Search results now link to the new detail page ---
                     resultDiv.onclick = () => { window.location.href = `ResourceDetail.html?resourceId=${result._id}`; };
                     searchResultsContainer.appendChild(resultDiv);
                 });

@@ -6,10 +6,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   const fileUpload = document.getElementById('file-upload');
   const fileName = document.getElementById('file-name');
   const uploadButton = document.querySelector('.upload-btn');
+  const API_BASE_URL = 'https://msomi-backend.onrender.com';
 
   // Fetch categories
   try {
-    const response = await fetch('https://msomi-backend.onrender.com');
+    // --- FIX #1: Corrected URL to fetch categories ---
+    const response = await fetch(`${API_BASE_URL}/api/categories`);
     const data = await response.json();
     if (response.ok) {
       if (data.data.length > 0) {
@@ -71,10 +73,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     formData.append('file', fileInput.files[0]);
 
     try {
-      const response = await fetch('https://msomi-backend.onrender.com', {
+      // --- FIX #2: Corrected URL to upload a resource ---
+      const response = await fetch(`${API_BASE_URL}/api/resources`, {
         method: 'POST',
-        // --- THIS IS THE FIX ---
-        // This line ensures the authentication cookie is sent with the request.
         credentials: 'include', 
         body: formData,
       });
@@ -87,7 +88,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         uploadForm.reset();
         fileName.textContent = 'No file selected';
         setTimeout(() => {
-          // Redirect to the new detail page of the uploaded resource
           window.location.href = `ResourceDetail.html?resourceId=${data.data._id}`;
         }, 1000);
       } else {

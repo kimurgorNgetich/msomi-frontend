@@ -5,7 +5,9 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   const messageDiv = document.getElementById('message');
 
   try {
-    const response = await fetch('https://msomi-backend.onrender.com', {
+    // --- THIS IS THE FIX ---
+    // The URL now correctly points to the /api/auth/login endpoint on your live server.
+    const response = await fetch('https://msomi-backend.onrender.com/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -18,9 +20,6 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     console.log('Login response data:', data);
 
     if (response.ok) {
-      // --- THIS IS THE FIX ---
-      // The user object returned from the API must be saved to localStorage
-      // so other scripts (like homepageScript.js) can check the user's role.
       if (data.user) {
           localStorage.setItem('user', JSON.stringify(data.user));
       }
@@ -30,21 +29,19 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       
       messageDiv.textContent = 'Login successful';
       messageDiv.className = 'message success';
-      messageDiv.style.display = 'block';
       
       setTimeout(() => {
         window.location.href = 'HomePage.html';
       }, 1000);
 
     } else {
-      messageDiv.textContent = data.error || 'Login failed';
-      messageDiv.className = 'message error';
-      messageDiv.style.display = 'block';
+      throw new Error(data.error || 'Login failed');
     }
   } catch (err) {
     console.error('Login Fetch Error:', err);
     messageDiv.textContent = 'Error: ' + err.message;
     messageDiv.className = 'message error';
-    messageDiv.style.display = 'block';
+  } finally {
+      messageDiv.style.display = 'block';
   }
 });

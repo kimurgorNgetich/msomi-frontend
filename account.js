@@ -1,13 +1,10 @@
 // frontend resources/account.js
 
 document.addEventListener('DOMContentLoaded', async function() {
-    // --- ELEMENT SELECTORS ---
     const contentList = document.getElementById('contentList');
     const changePasswordForm = document.getElementById('changePasswordForm');
     const passwordError = document.getElementById('passwordError');
     const deleteAccountBtn = document.getElementById('deleteAccountBtn');
-    
-    // Modals
     const deleteContentModal = document.getElementById('deleteContentModal');
     const cancelDeleteContent = document.getElementById('cancelDeleteContent');
     const confirmDeleteContent = document.getElementById('confirmDeleteContent');
@@ -16,16 +13,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     const confirmDeleteAccount = document.getElementById('confirmDeleteAccount');
     const deleteAccountError = document.getElementById('deleteAccountError');
 
+    const API_BASE_URL = 'https://msomi-backend.onrender.com';
     let contentToDelete = null;
 
-    // --- DATA FETCHING ---
     const loadContent = async () => {
         try {
-            // --- CHANGE: Call the new, dedicated endpoint ---
-            const response = await fetch('https://msomi-backend.onrender.com', { 
+            const response = await fetch(`${API_BASE_URL}/api/resources/my-resources`, { 
                 credentials: 'include' 
             });
-
             if (!response.ok) {
                 const err = await response.json();
                 throw new Error(err.error || 'Failed to load your resources.');
@@ -38,7 +33,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 return;
             }
 
-            // No client-side filtering is needed anymore! The backend does the work.
             data.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'content-item';
@@ -52,20 +46,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                 contentList.appendChild(div);
             });
 
-            // Re-attach event listeners after rendering
             document.querySelectorAll('.delete-content-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     contentToDelete = this.getAttribute('data-id');
                     deleteContentModal.style.display = 'flex';
                 });
             });
-
         } catch (error) {
             contentList.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
         }
     };
-    
-    // Change Password Form
+
     changePasswordForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         passwordError.textContent = '';
@@ -79,12 +70,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         
         try {
-            const response = await fetch('https://msomi-backend.onrender.com', {
+            const response = await fetch(`${API_BASE_URL}/api/auth/changepassword`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                // This request needs credentials to be sent
                 credentials: 'include',
-                // The body is now correct and does not send the email
                 body: JSON.stringify({ currentPassword, newPassword }),
             });
             const data = await response.json();
@@ -98,7 +87,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     });
 
-    // Delete Account Logic
     deleteAccountBtn.addEventListener('click', () => {
         deleteAccountModal.style.display = 'flex';
     });
@@ -112,12 +100,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         try {
-            const response = await fetch('https://msomi-backend.onrender.com', {
+            const response = await fetch(`${API_BASE_URL}/api/auth/deleteaccount`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
-                // This request needs credentials to be sent
                 credentials: 'include',
-                // The body is now correct and does not send the email
                 body: JSON.stringify({ password }),
             });
             const data = await response.json();
@@ -125,20 +111,18 @@ document.addEventListener('DOMContentLoaded', async function() {
                 throw new Error(data.error || 'Failed to delete account.');
             }
             alert('Account deleted successfully.');
-            localStorage.clear(); // Clear all user data
+            localStorage.clear();
             window.location.href = 'RegisterPage.html';
         } catch (error) {
             deleteAccountError.textContent = error.message;
         }
     });
 
-    // Delete Content Logic
     confirmDeleteContent.addEventListener('click', async () => {
         if (!contentToDelete) return;
         try {
-            const response = await fetch(`https://msomi-backend.onrender.com`, {
+            const response = await fetch(`${API_BASE_URL}/api/resources/${contentToDelete}`, {
                 method: 'DELETE',
-                // This request needs credentials to be sent
                 credentials: 'include'
             });
             if (!response.ok) {
@@ -146,7 +130,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 throw new Error(data.error || 'Failed to delete content.');
             }
             alert('Content deleted successfully');
-            await loadContent(); // Refresh the list
+            await loadContent();
         } catch (error) {
             alert('Error: ' + error.message);
         } finally {
@@ -155,7 +139,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     });
 
-    // Modal Closing Logic
     cancelDeleteContent.addEventListener('click', () => deleteContentModal.style.display = 'none');
     cancelDeleteAccount.addEventListener('click', () => deleteAccountModal.style.display = 'none');
     window.addEventListener('click', (e) => {
@@ -163,6 +146,5 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (e.target === deleteAccountModal) deleteAccountModal.style.display = 'none';
     });
 
-    // Initial Load
     await loadContent();
 });

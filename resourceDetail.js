@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resourceContainer = document.getElementById('resource-container');
     const backButton = document.getElementById('back-button');
     let resourceId = null;
+    const API_BASE_URL = 'https://msomi-backend.onrender.com';
 
     backButton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -21,7 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch(`https://msomi-backend.onrender.com`);
+            // --- FIX #1: Corrected URL to fetch a specific resource by its ID ---
+            const response = await fetch(`${API_BASE_URL}/api/resources/${resourceId}`);
             if (!response.ok) {
                 const err = await response.json();
                 throw new Error(err.error || 'Failed to fetch resource details.');
@@ -39,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="detail"><strong>Description:</strong> ${resource.description}</div>
             <div class="detail"><strong>Category:</strong> ${resource.category?.name || 'N/A'}</div>
             <div class="detail"><strong>Uploaded by:</strong> ${resource.uploadedBy?.name || 'Unknown'}</div>
-            <div class="detail"><strong>Average Rating:</strong> ${resource.averageRating} / 5</div>
+            <div class="detail"><strong>Average Rating:</strong> ${resource.averageRating || 0} / 5</div>
             <a href="#" class="download-btn" id="download-button">Download</a>
 
             <div class="rating-section">
@@ -55,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        // Add event listeners after rendering
         document.getElementById('download-button').addEventListener('click', (e) => {
             e.preventDefault();
             handleDownload(resource._id, resource.fileName);
@@ -71,7 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const messageDiv = document.getElementById('rating-message');
 
         try {
-            const response = await fetch(`https://msomi-backend.onrender.com`, {
+            // --- FIX #2: Corrected URL to submit a rating for a specific resource ---
+            const response = await fetch(`${API_BASE_URL}/api/resources/${resourceId}/rate`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
@@ -87,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
             messageDiv.className = 'message success';
             messageDiv.style.display = 'block';
             
-            // Refresh the resource details to show the new average rating
             await fetchResource();
 
         } catch (error) {
@@ -99,7 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const handleDownload = async (id, filename) => {
         try {
-            const response = await fetch(`https://msomi-backend.onrender.com`, {
+            // --- FIX #3: Corrected URL to download a specific resource ---
+            const response = await fetch(`${API_BASE_URL}/api/resources/${id}/download`, {
                 credentials: 'include'
             });
             if (!response.ok) {
@@ -122,6 +124,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Initial load
     fetchResource();
 });

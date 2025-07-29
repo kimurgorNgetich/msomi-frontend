@@ -26,8 +26,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         return categoryMap[normalizedName] || 'category-default';
     };
 
-    try {
-        const response = await fetch('https://msomi-backend.onrender.com');
+     try {
+        // --- THIS IS THE ONLY LINE THAT HAS CHANGED ---
+        // The URL now correctly points to the /api/categories endpoint.
+        const response = await fetch('https://msomi-backend.onrender.com/api/categories');
         const data = await response.json();
         
         if (response.ok) {

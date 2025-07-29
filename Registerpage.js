@@ -16,7 +16,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 
   try {
     // --- THIS IS THE FIX ---
-    // The URL now correctly points to the /api/auth/register endpoint.
+    // The URL now correctly points to the /api/auth/register endpoint on your live server.
     const response = await fetch('https://msomi-backend.onrender.com/api/auth/register', {
       method: 'POST',
       headers: {
@@ -29,9 +29,9 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
     const data = await response.json();
     
     if (response.ok) {
-      messageDiv.textContent = "Registration successful! Redirecting to login...";
+      messageDiv.textContent = "Registration successful! Redirecting...";
       messageDiv.className = 'message success';
-      // Save user data to localStorage upon successful registration
+      // Save user data to localStorage so they are logged in immediately
       if (data.user) {
         localStorage.setItem('user', JSON.stringify(data.user));
       }

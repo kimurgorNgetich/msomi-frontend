@@ -8,15 +8,15 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            background-image: url(libra.jpg);
+            padding: 20px; /* Add some padding for mobile */
+            background-image: url(libra.jpg); /* Default desktop background */
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
             background-attachment: fixed;
         }
         #categoryContainer {
-            min-height: 100vh; /* Ensure container is visible */
+            min-height: 100vh;
         }
         .button-row {
             display: flex;
@@ -35,22 +35,6 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
-        }
-        @media (max-width: 768px) {
-            .big-button {
-                width: 250px;
-                height: 150px;
-            }
-        }
-        @media (max-width: 480px) {
-            .big-button {
-                width: 100%;
-                max-width: 300px;
-                height: 120px;
-            }
-            .button-row {
-                gap: 15px;
-            }
         }
         .big-button:hover {
             transform: translateY(-5px);
@@ -86,36 +70,41 @@
             padding: 20px;
         }
         /* Category-specific background images */
-        .category-business .button-bg {
-            background-image: url(bizzz.jpg);
+        .category-business .button-bg { background-image: url(bizzz.jpg); }
+        .category-ict .button-bg { background-image: url(comps.jpg); }
+        .category-law .button-bg { background-image: url(juris.jpg); }
+        .category-education .button-bg { background-image: url(educ.jpg); }
+        .category-music .button-bg { background-image: url(musik.jpg); }
+        .category-health .button-bg { background-image: url(smhs.jpg); }
+        .category-mathematics .button-bg { background-image: url(mathz.jpg); }
+        .category-physics .button-bg { background-image: url(Gears.jpg); }
+        .category-hospitality .button-bg { background-image: url(hospi.jpg); }
+        .category-default .button-bg { background-image: url('default.jpg'); }
+
+        /* --- NEW: Mobile Responsive Styles --- */
+        @media (max-width: 600px) {
+            body {
+                /* This rule will only apply on screens 600px wide or smaller */
+                background-image: url(mobLIBRA.jpg);
+            }
+
+            .button-row {
+                /* Stack buttons vertically on mobile */
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                margin-top: 30px;
+                margin-bottom: 30px;
+            }
+
+            .big-button {
+                /* Make buttons take up most of the screen width */
+                width: 90%;
+                height: 150px;
+            }
         }
-        .category-ict .button-bg {
-            background-image: url(comps.jpg);
-        }
-        .category-law .button-bg {
-            background-image: url(juris.jpg);
-        }
-        .category-education .button-bg {
-            background-image: url(educ.jpg);
-        }
-        .category-music .button-bg {
-            background-image: url(musik.jpg);
-        }
-        .category-health .button-bg {
-            background-image: url(smhs.jpg);
-        }
-        .category-mathematics .button-bg {
-            background-image: url(mathz.jpg);
-        }
-        .category-physics .button-bg {
-            background-image: url(Gears.jpg);
-        }
-        .category-hospitality .button-bg {
-            background-image: url(hospi.jpg);
-        }
-        .category-default .button-bg {
-            background-image: url('default.jpg');
-        }
+        /* --- END of Mobile Styles --- */
+
     </style>
 </head>
 <body>

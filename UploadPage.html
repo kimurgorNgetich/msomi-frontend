@@ -8,26 +8,26 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
-            background-image: url(homebckg.png);
+            padding: 20px; /* Add padding for mobile */
+            background-image: url(homebckg.png); /* Default desktop background */
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
             background-attachment: fixed;
+            box-sizing: border-box;
         }
         .body-words {
             font-family: Arial, Helvetica, sans-serif;
             color: #f9f9ff;
         }
         .upload-container {
-            background-color: #5e5f61;
+            background-color: rgba(94, 95, 97, 0.85); /* Slightly more transparent */
             border-radius: 15px;
             padding: 30px 20px;
             text-align: center;
-            margin: 20px 20px;
-        }
-        .upload-container:hover {
-            border-color: #999;
+            margin: 20px auto; /* Center the container */
+            max-width: 600px; /* Set a max-width */
+            box-sizing: border-box;
         }
         .file-upload {
             border: 2px dashed #ddd;
@@ -35,6 +35,7 @@
             border-radius: 8px;
             cursor: pointer;
             background-color: #6b6c6e;
+            color: #f0f0f0;
         }
         .file-upload.dragover {
             background-color: #7a7b7d;
@@ -66,25 +67,21 @@
             gap: 15px;
             margin-bottom: 20px;
         }
-        .input-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
         label {
             font-weight: bold;
-            width: 120px;
             text-align: left;
         }
         select, input[type="text"] {
-            flex-grow: 1;
-            padding: 8px;
+            width: 100%;
+            padding: 10px;
             border-radius: 4px;
             border: 1px solid #ddd;
+            box-sizing: border-box;
+            font-size: 16px;
         }
         .required-field::after {
             content: " *";
-            color: red;
+            color: #ff9999;
         }
         .back-button {
             background: transparent;
@@ -94,11 +91,9 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
-            margin: 20px;
-            margin-left: auto;
-            margin-top: 3px;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex; /* Use inline-flex for alignment */
+            align-items: center;
         }
         .message {
             margin: 20px 0;
@@ -112,6 +107,25 @@
         .message.error {
             background-color: #f44336;
         }
+
+        /* --- NEW: Mobile Responsive Styles --- */
+        @media (max-width: 600px) {
+            body {
+                /* This rule will only apply on screens 600px wide or smaller */
+                background-image: url(mobBCKG.png);
+            }
+
+            .upload-container {
+                margin: 10px;
+                padding: 20px 15px;
+            }
+
+            h1.body-words {
+                font-size: 1.8em;
+            }
+        }
+        /* --- END of Mobile Styles --- */
+
     </style>
 </head>
 <body>

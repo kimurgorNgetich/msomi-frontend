@@ -9,27 +9,31 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
-            padding: 0;
+            padding: 20px; /* Add padding for smaller screens */
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-image: url(accountcreate.png);
+            min-height: 100vh;
+            background-image: url(accountcreate.png); /* Default desktop background */
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
             background-attachment: fixed;
+            box-sizing: border-box;
         }
         .container {
-            background-color: rgb(110, 122, 124);
+            background-color: rgb(110, 122, 124, 0.8);
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 100%;
+            max-width: 400px; /* Increased max-width for better spacing */
+            box-sizing: border-box;
         }
         h2 {
             text-align: center;
-            color: #333;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
         .form-group {
             margin-bottom: 15px;
@@ -39,15 +43,17 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
+            color: #ffffff;
         }
         input[type="text"],
         input[type="email"],
         input[type="password"] {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 9px;
             box-sizing: border-box;
+            font-size: 16px;
         }
         button {
             width: 100%;
@@ -65,26 +71,28 @@
         .login-link {
             text-align: center;
             margin-top: 10px;
+            color: #f0f0f0;
         }
         .login-link a {
-            color: #4CAF50;
+            color: #00cdfa;
             text-decoration: none;
         }
         .terms-checkbox {
             margin: 15px 0;
             display: flex;
             align-items: center;
+            color: #f0f0f0;
         }
         .terms-checkbox input {
             margin-right: 8px;
         }
         .terms-link {
-            color: #476ff1;
+            color: #00cdfa;
             text-decoration: underline;
             cursor: pointer;
         }
         .terms-link:hover {
-            color: #1a0070;
+            color: #ffffff;
         }
         .message {
             margin-top: 15px;
@@ -109,6 +117,7 @@
             top: 35px;
             cursor: pointer;
             user-select: none;
+            color: #333;
         }
         .toggle-icon {
             font-size: 16px;
@@ -117,11 +126,21 @@
         .toggle-icon:hover {
             opacity: 1;
         }
+
+        /* --- NEW: Mobile Responsive Styles --- */
+        @media (max-width: 600px) {
+            body {
+                /* This rule will only apply on screens 600px wide or smaller */
+                background-image: url(mobLOG.png);
+            }
+        }
+        /* --- END of Mobile Styles --- */
+
     </style>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
     <div class="container">
@@ -144,7 +163,7 @@
             </div>
             <div class="terms-checkbox">
                 <input type="checkbox" id="terms" name="terms" required>
-                <label for="terms">I have read and agree with the <a href="terms.html" class="terms-link">terms of usage</a></label>
+                <label for="terms">I have read and agree with the <a href="terms.html" class="terms-link" target="_blank">terms of usage</a></label>
             </div>
             <button type="submit">Register</button>
         </form>

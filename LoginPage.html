@@ -13,11 +13,13 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-image: url(accountcreate.png);
+            padding: 20px; /* Add padding for smaller screens */
+            background-image: url(accountcreate.png); /* Default desktop background */
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
             background-attachment: fixed;
+            box-sizing: border-box;
         }
         .login-container {
             background-color: rgba(92, 122, 121, 0.6);
@@ -27,6 +29,7 @@
             width: 100%;
             max-width: 400px;
             text-align: center;
+            box-sizing: border-box;
         }
         h1 {
             color: #333;
@@ -114,6 +117,16 @@
         .toggle-icon:hover {
             opacity: 1;
         }
+
+        /* --- NEW: Mobile Responsive Styles --- */
+        @media (max-width: 600px) {
+            body {
+                /* This rule will only apply on screens 600px wide or smaller */
+                background-image: url(mobLOG.png);
+            }
+        }
+        /* --- END of Mobile Styles --- */
+
     </style>
 </head>
 <body>
@@ -136,8 +149,7 @@
         </form>
         <div class="links">
             <a style="font-size:20px;" href="RegisterPage.html">Create account</a>
-            <!-- --- THIS LINK IS NOW CORRECT --- -->
-            <a style="font-size: 20px;"  href="ForgotPassword.html">Forgot password</a>
+            <a style="font-size: 20px;" href="ForgotPassword.html">Forgot password</a>
         </div>
         <div id="message" class="message"></div>
     </div>

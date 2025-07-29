@@ -10,11 +10,12 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-image: url(Docs.png);
+            background-image: url(Docs.png); /* Default desktop background */
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
             background-attachment: fixed;
+            box-sizing: border-box;
         }
         .container {
             max-width: 1200px;
@@ -44,6 +45,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
+            box-sizing: border-box;
         }
         .documents-list {
             display: grid;
@@ -55,7 +57,7 @@
             padding: 15px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            cursor: pointer; /* Make the whole card clickable */
+            cursor: pointer;
             transition: transform 0.2s;
         }
         .document-card:hover {
@@ -96,6 +98,25 @@
         .message.error {
             background-color: #f44336;
         }
+
+        /* --- NEW: Mobile Responsive Styles --- */
+        @media (max-width: 600px) {
+            body {
+                /* This rule will only apply on screens 600px wide or smaller */
+                background-image: url(mobBCKG.png);
+            }
+
+            .documents-list {
+                /* Make the document grid a single column */
+                grid-template-columns: 1fr;
+            }
+
+            .search-bar {
+                max-width: 100%;
+            }
+        }
+        /* --- END of Mobile Styles --- */
+
     </style>
 </head>
 <body>
@@ -123,9 +144,6 @@
             const documentsList = document.getElementById('documents-list');
             const messageDiv = document.getElementById('message');
             const searchBar = document.getElementById('search-bar');
-            
-            // --- THIS IS THE FIX ---
-            // Define the base URL for your live backend
             const API_BASE_URL = 'https://msomi-backend.onrender.com';
 
             searchBar.addEventListener('input', filterDocuments);
@@ -136,7 +154,6 @@
             try {
                 let categoryName = 'All Documents';
                 if (categoryId) {
-                    // --- FIX: Use the correct, full URL to fetch the category name ---
                     const categoryResponse = await fetch(`${API_BASE_URL}/api/categories/${categoryId}`);
                     const categoryData = await categoryResponse.json();
                     if (categoryResponse.ok) {
@@ -145,7 +162,6 @@
                 }
                 categoryTitle.textContent = categoryName;
                 
-                // --- FIX: Use the correct, full URL to fetch the resources ---
                 const url = categoryId 
                     ? `${API_BASE_URL}/api/resources?category=${categoryId}`
                     : `${API_BASE_URL}/api/resources`;
@@ -185,7 +201,6 @@
                     <p>Uploaded by: ${resource.uploadedBy?.name || 'Unknown'}</p>
                     <p><strong>Rating: ${resource.averageRating || 0} / 5</strong></p>
                 `;
-                // Make the card link to the detail page
                 card.addEventListener('click', () => {
                     window.location.href = `ResourceDetail.html?resourceId=${resource._id}`;
                 });

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Use - msomi.com</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 40px 20px;
+            background-image: url(TOS.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+            color: #f0f0f0;
+        }
+        
+        /* --- NEW: Styles for the subtle back button --- */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            color: #ffffff;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            z-index: 100;
+        }
+        .back-button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        /* --- End of new styles --- */
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px 40px;
+            background-color: rgba(30, 30, 30, 0.85); 
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #00cdfa;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        p, li {
+            font-size: 16px;
+            color: #e0e0e0;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        a {
+            color: #00cdfa;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 14px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- --- NEW: Back button element --- -->
+    <a href="#" id="back-button" class="back-button" title="Go Back">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+            <path d="M560.67-240 320-480.67l240.67-240.66L608-674 414.67-480.67 608-287.33 560.67-240Z"/>
+        </svg>
+    </a>
+
+    <div class="container">
+        <h1>Terms of Use</h1>
+        <p><strong>Effective Date:</strong> July 28, 2025</p>
+
+        <p>Welcome to our Note Sharing Platform (“the Platform”, “we”, “us”, or “our”). By accessing or using this website and its services, you (“user”, “you”) agree to comply with and be bound by the following Terms of Use. If you do not agree with these terms, please do not use the Platform.</p>
+
+        <h2>1. Use of the Platform</h2>
+        <p>You may only use this platform for academic purposes such as sharing, viewing, or downloading study notes. You agree not to misuse the platform for illegal, commercial, or unethical activities. Users must not upload any content that is harmful, threatening, offensive, or violates the rights of others.</p>
+
+        <h2>2. User Accounts</h2>
+        <p>Registration may be required to upload or download notes. You are responsible for maintaining the confidentiality of your login credentials. We reserve the right to suspend or delete accounts that violate these Terms.</p>
+
+        <h2>3. Content Ownership</h2>
+        <p>Users retain ownership of the notes they upload but grant the Platform a non-exclusive, royalty-free license to display, distribute, and share that content. You confirm that all content uploaded is your original work or you have permission to share it. Plagiarized or copyrighted materials without permission are strictly prohibited.</p>
+
+        <h2>4. Prohibited Conduct</h2>
+        <p>You agree not to:</p>
+        <ul>
+            <li>Upload viruses, malware, or malicious code.</li>
+            <li>Attempt to gain unauthorized access to other user accounts or the system.</li>
+            <li>Impersonate others or provide false information.</li>
+        </ul>
+
+        <h2>5. Intellectual Property</h2>
+        <p>All trademarks, logos, and design elements of the Platform are owned by us and may not be used without permission. You may not reverse engineer, decompile, or modify any part of the system.</p>
+
+        <h2>6. Termination</h2>
+        <p>We may suspend or terminate your access to the Platform at any time, without prior notice, for violating these Terms.</p>
+
+        <h2>7. Limitation of Liability</h2>
+        <p>The Platform is provided “as is” without any warranties of any kind. We are not responsible for any data loss, inaccuracies, or damages resulting from use of the Platform.</p>
+
+        <h2>8. Privacy</h2>
+        <p>By using the Platform, you agree to the collection and use of your data in accordance with our Privacy Policy.</p>
+
+        <h2>9. Changes to Terms</h2>
+        <p>We reserve the right to change these Terms of Use at any time. Continued use of the Platform after changes are posted constitutes your acceptance of the updated Terms.</p>
+
+        <h2>10. Contact</h2>
+        <p>If you have any questions about these Terms, please contact us at: <a href="mailto:contact@msomi.com">contact@msomi.com</a>.</p>
+    </div>
+
+    <div class="footer">
+        &copy; 2025 msomi.com. All rights reserved.
+    </div>
+
+    <!-- --- NEW: Script for the back button --- -->
+    <script>
+        document.getElementById('back-button').addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent the link from navigating to '#'
+            window.history.back(); // Go to the previous page in the browser's history
+        });
+    </script>
+
+</body>
+</html>

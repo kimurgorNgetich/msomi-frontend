@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url(libra.jpg);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        #categoryContainer {
+            min-height: 100vh; /* Ensure container is visible */
+        }
+        .button-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        .big-button {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .big-button {
+                width: 250px;
+                height: 150px;
+            }
+        }
+        @media (max-width: 480px) {
+            .big-button {
+                width: 100%;
+                max-width: 300px;
+                height: 120px;
+            }
+            .button-row {
+                gap: 15px;
+            }
+        }
+        .big-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .button-bg {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s;
+        }
+        .big-button:hover .button-bg {
+            transform: scale(1.05);
+        }
+        .button-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .button-title {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            text-align: center;
+            padding: 20px;
+        }
+        /* Category-specific background images */
+        .category-business .button-bg {
+            background-image: url(bizzz.jpg);
+        }
+        .category-ict .button-bg {
+            background-image: url(comps.jpg);
+        }
+        .category-law .button-bg {
+            background-image: url(juris.jpg);
+        }
+        .category-education .button-bg {
+            background-image: url(educ.jpg);
+        }
+        .category-music .button-bg {
+            background-image: url(musik.jpg);
+        }
+        .category-health .button-bg {
+            background-image: url(smhs.jpg);
+        }
+        .category-mathematics .button-bg {
+            background-image: url(mathz.jpg);
+        }
+        .category-physics .button-bg {
+            background-image: url(Gears.jpg);
+        }
+        .category-hospitality .button-bg {
+            background-image: url(hospi.jpg);
+        }
+        .category-default .button-bg {
+            background-image: url('default.jpg');
+        }
+    </style>
+</head>
+<body>
+    <div id="categoryContainer"></div>
+    <script src="categories.js"></script>
+</body>
+</html>

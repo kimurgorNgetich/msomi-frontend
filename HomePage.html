@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
+        <title>msomi.com</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background-image: url(homebckg.png);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+                background-attachment: fixed;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            .title-bar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background: transparent;
+                color: #ffffff;
+                height: 20px;
+                padding: 20px;
+                font-size: 12px;
+                user-select: none;
+                margin-top: 15px;
+                margin: 10px;
+                border-radius: 15px;
+            }
+            .title-bar-home {
+                background: none; border: none; color: white; padding: 6px 8px;
+                margin-right: auto; cursor: pointer; border-radius: 4px;
+            }
+            .title-bar-logo {
+                position: absolute; left: 48%; transform: translateX(-50%);
+                font-weight: bold; font-size: 50px; color: #00cdfa;
+            }
+            .title-bar-right {
+                display: flex; align-items: center; gap: 15px; margin-left: auto;
+            }
+            .categories-btn {
+                background: transparent; border: none; color: white; padding: 8px 16px;
+                border-radius: 20px; cursor: pointer; font-size: 20px;
+                transition: background 0.3s; margin-right: 20px;
+            }
+            .search-btn, .menu-btn {
+                background: none; border: none; color: white; cursor: pointer;
+                font-size: 20px; padding: 6px; border-radius: 50%;
+                display: flex; align-items: center; justify-content: center;
+            }
+            .search-bar {
+                width: 100%; padding: 10px 20px; background: transparent;
+                display: none; animation: fadeIn 0.3s ease;
+            }
+            .search-container {
+                display: flex; max-width: 800px; margin: 0 auto; position: relative;
+            }
+            .search-input {
+                flex: 1; padding: 12px 20px; border: none; border-radius: 30px;
+                font-size: 16px; outline: none;
+            }
+            .search-results-container {
+                display: none; position: absolute; top: 100%; left: 0; right: 0;
+                background-color: #fff; border: 1px solid #ddd; border-radius: 8px;
+                margin-top: 5px; max-height: 300px; overflow-y: auto; z-index: 1001;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            }
+            .close-search {
+                background: none; border: none; color: white; font-size: 24px;
+                margin-left: 10px; cursor: pointer; padding: 0 10px;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .loader {
+                border: 4px solid #f3f3f3; border-top: 4px solid #00cdfa;
+                border-radius: 50%; width: 30px; height: 30px;
+                animation: spin 1s linear infinite; margin: 20px auto;
+            }
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            
+            /* --- THIS IS THE FIRST CHANGE --- */
+            .main-content-container {
+                max-width: 1200px;
+                /* I've increased the top margin again to push it down even more */
+                margin: 350px auto 40px; 
+                padding: 0 20px;
+            }
+            
+            /* --- THIS IS THE SECOND CHANGE (NEW STYLE FOR THE TITLE) --- */
+            .section-title {
+                text-align: center;
+                font-size: 2em;
+                color: white;
+                margin-bottom: 30px;
+                text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+            }
+            /* --- END OF CHANGES --- */
+
+            .documents-list {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 20px;
+            }
+            .document-card {
+                background: white;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                color: #333;
+            }
+            .document-card h3 { margin: 0 0 10px; font-size: 18px; }
+            .document-card p { margin: 5px 0; color: #666; }
+            .download-btn {
+                background-color: #3498db; color: white; border: none;
+                padding: 8px 12px; border-radius: 4px; cursor: pointer;
+                font-size: 14px; margin-top: 10px; transition: background-color 0.3s;
+            }
+            .download-btn:hover { background-color: #2980b9; }
+            .pagination {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 30px;
+                gap: 10px;
+            }
+            .pagination button {
+                background-color: #00cdfa; color: white; border: none;
+                padding: 10px 15px; border-radius: 5px; cursor: pointer;
+            }
+            .pagination button:disabled { background-color: #ccc; cursor: not-allowed; }
+            .pagination span { color: white; font-weight: bold; }
+
+            /* Other styles for panels, menu, etc. remain the same */
+            .categories-panel {
+                position: fixed; bottom: -100%; left: 0; width: 100%; height: 80vh;
+                background: transparent; backdrop-filter: blur(10px);
+                border-top-left-radius: 20px; border-top-right-radius: 20px;
+                z-index: 1000; transition: bottom 0.3s ease-out; overflow: hidden;
+            }
+            .categories-panel.active { bottom: 0; }
+            .categories-iframe { width: 100%; height: 100%; background: transparent; }
+            .close-categories {
+                position: absolute; top: 15px; right: 15px; background: none; border: none;
+                color: white; font-size: 24px; cursor: pointer; z-index: 1001;
+            }
+            .menu-panel {
+                position: fixed; top: 0; right: -100%; width: 320px; height: 100vh;
+                background-color: rgba(22, 26, 26, 0.95); backdrop-filter: blur(12px);
+                z-index: 1000; transition: right 0.3s ease-out; overflow-y: auto;
+                box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3); border-left: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .menu-panel.active { right: 0; }
+            .menu-content { padding: 30px 25px; }
+            .close-menu {
+                background: rgba(255, 255, 255, 0.1); border: none; color: white;
+                font-size: 30px; cursor: pointer; margin-bottom: 30px; width: 40px; height: 40px; border-radius: 50%;
+                display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;
+            }
+            .close-menu:hover { background: rgba(0, 205, 250, 0.2); color: #00cdfa; transform: rotate(90deg); }
+            .menu-panel nav ul { list-style: none; padding: 0; margin: 0; }
+            .menu-panel nav ul li { margin-bottom: 8px; position: relative; overflow: hidden; border-radius: 6px; transition: all 0.3s ease; }
+            .menu-panel nav ul li:hover { background: rgba(255, 255, 255, 0.05); }
+            .menu-panel nav ul li a {
+                display: block; color: white; text-decoration: none; font-size: 17px;
+                font-weight: 500; padding: 12px 20px; transition: all 0.3s ease; position: relative;
+            }
+            .menu-panel nav ul li a:hover { color: #00cdfa; transform: translateX(8px); }
+            body::after {
+                content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background-color: rgba(0, 0, 0, 0.5); z-index: 999; opacity: 0;
+                pointer-events: none; transition: opacity 0.3s;
+            }
+            body.menu-open::after, body.categories-open::after { opacity: 1; pointer-events: auto; }
+        </style>
+    </head>
+    <body>
+        <div class="title-bar">
+            <button class="title-bar-home">
+                <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#F3F3F3"><path d="M231-191h122v-257.5h254V-191h122v-374.5L480-752 231-565.33V-191Zm-91.5 91.5v-512L480-867l341.5 255.83V-99.5h-295V-368h-93v268.5h-294ZM480-472Z"/></svg>
+            </button>
+            <div class="title-bar-logo">msomi</div>
+            <div class="title-bar-right">
+                <button class="categories-btn">Categories</button>
+                <button class="search-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#F3F3F3"><path d="M790.67-89.33 525-354.33q-29 21.95-68.14 34.64Q417.72-307 372-307q-116.11 0-196.89-80.83-80.78-80.84-80.78-195.5 0-114.67 80.84-195.5Q256-859.67 371-859.67q115 0 195.5 80.84Q647-698 647-583.23q0 45.23-12.33 83.4-12.34 38.16-35.67 70.16L865.67-164l-75 74.67Zm-419.1-322.34q71.93 0 121.35-50 49.41-50 49.41-121.66 0-71.67-49.51-121.67-49.52-50-121.25-50-72.29 0-122.43 50T199-583.33q0 71.66 50.04 121.66t122.53 50Z"/></svg>
+                </button>
+                <button class="menu-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#F3F3F3"><path d="M95-203v-95h771v95H95Zm0-230v-94h771v94H95Zm0-229v-95h771v95H95Z"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="main-content-container">
+            <!-- --- NEW: ADDED THE TITLE HERE --- -->
+            <h2 class="section-title">Recently Uploaded Documents</h2>
+
+            <div id="resources-container" class="documents-list">
+                <!-- Resource cards will be injected here by JavaScript -->
+            </div>
+            <div id="pagination-container" class="pagination">
+                <!-- Pagination buttons will be injected here -->
+            </div>
+        </div>
+        
+        <script src="homepageScript.js"></script>
+    </body>
+</html>

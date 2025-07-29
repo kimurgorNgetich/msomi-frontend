@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-image: url(accountcreate.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 40px 30px;
+            background-color: rgba(92, 122, 121, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #f0f0f0;
+        }
+        h1, h2 {
+            color: #ffffff;
+            border-bottom: 1px solid #cccccc;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .section:last-child {
+            border-bottom: none;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input[type="password"],
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .back-button {
+            background: transparent;
+            color: #f9f9ff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .danger-btn {
+            background-color: #e74c3c;
+        }
+        .danger-btn:hover {
+            background-color: #c0392b;
+        }
+        .content-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .confirmation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 500px;
+            width: 90%;
+        }
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        .error {
+            color: #ffdddd;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <a href="HomePage.html" class="back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF">
+            <path d="M560.67-240 320-480.67l240.67-240.66L608-674 414.67-480.67 608-287.33 560.67-240Z"/>
+        </svg>
+    </a>
+    <div class="container">
+        <h1>Account Settings</h1>
+        
+        <div class="section">
+            <h2>Change Password</h2>
+            <form id="changePasswordForm">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" required minlength="8">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <div class="error" id="passwordError"></div>
+                <button type="submit">Update Password</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <h2>My Uploaded Content</h2>
+            <div id="contentList"><p>Loading your content...</p></div>
+        </div>
+
+        <div class="section">
+            <h2>Account Deletion</h2>
+            <p>Warning: Deleting your account is permanent and cannot be undone.</p>
+            <button id="deleteAccountBtn" class="danger-btn">Delete My Account</button>
+        </div>
+    </div>
+
+    <!-- Modals for confirmation -->
+    <div id="deleteContentModal" class="confirmation-modal">
+        <div class="modal-content">
+            <h3>Delete Content</h3>
+            <p>Are you sure? This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button id="cancelDeleteContent">Cancel</button>
+                <button id="confirmDeleteContent" class="danger-btn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="deleteAccountModal" class="confirmation-modal">
+        <div class="modal-content">
+            <h3>Delete Account</h3>
+            <p>This is permanent. Please enter your password to confirm.</p>
+            <div class="form-group">
+                <label for="deleteAccountPassword">Password:</label>
+                <input type="password" id="deleteAccountPassword" required>
+            </div>
+            <div class="error" id="deleteAccountError"></div>
+            <div class="modal-actions">
+                <button id="cancelDeleteAccount">Cancel</button>
+                <button id="confirmDeleteAccount" class="danger-btn">Delete Account</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to the new, corrected script -->
+    <script src="account.js"></script>
+</body>
+</html>

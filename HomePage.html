@@ -16,9 +16,9 @@
             body {
                 margin: 0;
                 padding: 0;
-                background-image: url(homebckg.png); /* Default desktop background */
+                background-image: url(homebckg.png);
                 background-repeat: no-repeat;
-                background-position: center center; /* Keep the image centered */
+                background-position: center center;
                 background-size: cover;
                 background-attachment: fixed;
                 font-family: Arial, Helvetica, sans-serif;
@@ -30,28 +30,33 @@
                 background: transparent;
                 color: #ffffff;
                 height: 20px;
-                padding: 20px;
+                padding: 10px 20px; /* Adjusted padding */
                 font-size: 12px;
                 user-select: none;
-                margin-top: 15px;
                 margin: 10px;
                 border-radius: 15px;
+                position: relative;
+                z-index: 10;
             }
             .title-bar-home {
                 background: none; border: none; color: white; padding: 6px 8px;
-                margin-right: auto; cursor: pointer; border-radius: 4px;
+                cursor: pointer; border-radius: 4px;
+                flex-shrink: 0; /* Prevent home button from shrinking */
             }
             .title-bar-logo {
-                position: absolute; left: 48%; transform: translateX(-50%);
+                position: absolute; left: 50%; top: 50%;
+                transform: translate(-50%, -50%);
                 font-weight: bold; font-size: 50px; color: #00cdfa;
             }
             .title-bar-right {
-                display: flex; align-items: center; gap: 15px; margin-left: auto;
+                display: flex; align-items: center; gap: 15px;
+                flex-shrink: 0; /* Prevent right buttons from shrinking */
             }
             .categories-btn {
                 background: transparent; border: none; color: white; padding: 8px 16px;
                 border-radius: 20px; cursor: pointer; font-size: 20px;
-                transition: background 0.3s; margin-right: 20px;
+                transition: background 0.3s;
+                white-space: nowrap; /* Prevent text from wrapping */
             }
             .search-btn, .menu-btn {
                 background: none; border: none; color: white; cursor: pointer;
@@ -61,6 +66,8 @@
             .search-bar {
                 width: 100%; padding: 10px 20px; background: transparent;
                 display: none; animation: fadeIn 0.3s ease;
+                position: relative;
+                z-index: 10;
             }
             .search-container {
                 display: flex; max-width: 800px; margin: 0 auto; position: relative;
@@ -178,36 +185,41 @@
             }
             body.menu-open::after, body.categories-open::after { opacity: 1; pointer-events: auto; }
 
-            /* --- NEW: Mobile Responsive Styles --- */
             @media (max-width: 600px) {
                 body {
-                    /* This rule will only apply on screens 600px wide or smaller */
-                    background-image: url(mobHOME.png);
+                    background-image: url('mobileHOME.jpg');
                 }
-
                 .main-content-container {
-                    /* Push the content down less on mobile */
                     margin-top: 150px;
                 }
-
                 .documents-list {
-                    /* Make the document grid a single column */
                     grid-template-columns: 1fr;
                 }
-
+                
+                /* --- THIS IS THE FIX --- */
                 .title-bar-logo {
-                    /* Reduce the logo size */
-                    font-size: 32px;
+                    position: static; /* Remove absolute positioning */
+                    transform: none; /* Reset the transform */
+                    order: 2; /* Set the order to be in the middle */
+                    flex-grow: 1; /* Allow it to take up available space */
+                    text-align: center; /* Center the text within its space */
+                    font-size: 28px; /* Reduce size to prevent wrapping */
                 }
+                .title-bar-home {
+                    order: 1; /* Home button on the left */
+                    margin-right: 0; /* Reset margin */
+                }
+                .title-bar-right {
+                    order: 3; /* Right-side buttons on the right */
+                    margin-left: 0; /* Reset margin */
+                }
+                /* --- END OF FIX --- */
 
                 .categories-btn {
-                    /* Hide the text and just show an icon if you want, or just reduce padding */
                     font-size: 16px;
                     padding: 6px 12px;
                 }
             }
-            /* --- END of Mobile Styles --- */
-
         </style>
     </head>
     <body>

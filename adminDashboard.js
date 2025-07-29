@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalConfirmBtn = document.getElementById('modal-confirm-btn');
     const modalCancelBtn = document.getElementById('modal-cancel-btn');
     
-    const API_BASE_URL = 'http://localhost:5000';
+    const API_BASE_URL = 'https://msomi-backend.onrender.com';
     let deleteAction = null;
 
     const showMessage = (text, type = 'error') => {

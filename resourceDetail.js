@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:5000/api/resources/${resourceId}`);
+            const response = await fetch(`https://msomi-backend.onrender.com`);
             if (!response.ok) {
                 const err = await response.json();
                 throw new Error(err.error || 'Failed to fetch resource details.');
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const messageDiv = document.getElementById('rating-message');
 
         try {
-            const response = await fetch(`http://localhost:5000/api/resources/${resourceId}/rate`, {
+            const response = await fetch(`https://msomi-backend.onrender.com`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const handleDownload = async (id, filename) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/resources/${id}/download`, {
+            const response = await fetch(`https://msomi-backend.onrender.com`, {
                 credentials: 'include'
             });
             if (!response.ok) {

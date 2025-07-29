@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Fetch categories
   try {
-    const response = await fetch('http://localhost:5000/api/categories');
+    const response = await fetch('https://msomi-backend.onrender.com');
     const data = await response.json();
     if (response.ok) {
       if (data.data.length > 0) {
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     formData.append('file', fileInput.files[0]);
 
     try {
-      const response = await fetch('http://localhost:5000/api/resources', {
+      const response = await fetch('https://msomi-backend.onrender.com', {
         method: 'POST',
         // --- THIS IS THE FIX ---
         // This line ensures the authentication cookie is sent with the request.

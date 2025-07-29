@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const loadContent = async () => {
         try {
             // --- CHANGE: Call the new, dedicated endpoint ---
-            const response = await fetch('http://localhost:5000/api/resources/my-resources', { 
+            const response = await fetch('https://msomi-backend.onrender.com', { 
                 credentials: 'include' 
             });
 
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         
         try {
-            const response = await fetch('http://localhost:5000/api/auth/changepassword', {
+            const response = await fetch('https://msomi-backend.onrender.com', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 // This request needs credentials to be sent
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/deleteaccount', {
+            const response = await fetch('https://msomi-backend.onrender.com', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 // This request needs credentials to be sent
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     confirmDeleteContent.addEventListener('click', async () => {
         if (!contentToDelete) return;
         try {
-            const response = await fetch(`http://localhost:5000/api/resources/${contentToDelete}`, {
+            const response = await fetch(`https://msomi-backend.onrender.com`, {
                 method: 'DELETE',
                 // This request needs credentials to be sent
                 credentials: 'include'

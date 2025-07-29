@@ -5,7 +5,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   const messageDiv = document.getElementById('message');
 
   try {
-    const response = await fetch('http://localhost:5000/api/auth/login', {
+    const response = await fetch('https://msomi-backend.onrender.com', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

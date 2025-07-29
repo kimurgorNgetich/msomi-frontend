@@ -133,7 +133,7 @@
                 let categoryName = 'All Documents';
                 if (categoryId) {
                     // --- CHANGE: Removed credentials option for this public route ---
-                    const categoryResponse = await fetch(`http://localhost:5000/api/categories/${categoryId}`);
+                    const categoryResponse = await fetch(`https://msomi-backend.onrender.com`);
                     const categoryData = await categoryResponse.json();
                     if (categoryResponse.ok) {
                         categoryName = categoryData.data.name;
@@ -142,8 +142,8 @@
                 categoryTitle.textContent = categoryName;
 
                 const url = categoryId 
-                    ? `http://localhost:5000/api/resources?category=${categoryId}`
-                    : 'http://localhost:5000/api/resources';
+                    ? `https://msomi-backend.onrender.com`
+                    : 'https://msomi-backend.onrender.com';
                 // --- CHANGE: Removed credentials option for this public route ---
                 const response = await fetch(url);
                 const data = await response.json();
@@ -194,7 +194,7 @@
         async function handleDownload(event) {
             const resourceId = event.target.getAttribute('data-id');
             try {
-                const response = await fetch(`http://localhost:5000/api/resources/${resourceId}/download`, {
+                const response = await fetch(`https://msomi-backend.onrender.com`, {
                     credentials: 'include' // This is correct because download is protected
                 });
 

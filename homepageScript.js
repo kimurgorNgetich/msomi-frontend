@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
         paginationContainer.innerHTML = '';
 
         try {
-            const response = await fetch(`http://localhost:5000/api/resources?page=${page}&limit=6`);
+            const response = await fetch(`https://msomi-backend.onrender.com`);
             if (!response.ok) {
                 const err = await response.json();
                 throw new Error(err.error || 'Failed to fetch resources');
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- LOGOUT AND SEARCH FUNCTIONS ---
     async function logout() {
         try {
-            await fetch('http://localhost:5000/api/auth/logout', {
+            await fetch('https://msomi-backend.onrender.com', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
         searchResultsContainer.style.display = 'block';
         
         try {
-            const response = await fetch(`http://localhost:5000/api/resources/search?q=${encodeURIComponent(query)}`);
+            const response = await fetch(`https://msomi-backend.onrender.com`);
             const results = await response.json();
             searchResultsContainer.innerHTML = ''; 
             if (!response.ok) throw new Error(results.error || 'Search failed');

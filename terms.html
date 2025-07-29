@@ -87,7 +87,7 @@
 <body>
 
     <!-- --- NEW: Back button element --- -->
-    <a href="register.html" class="back-button" title="Go to Register Page">
+    <a href="#" id="back-button" class="back-button" title="Go Back">
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
             <path d="M560.67-240 320-480.67l240.67-240.66L608-674 414.67-480.67 608-287.33 560.67-240Z"/>
         </svg>
@@ -138,6 +138,14 @@
     <div class="footer">
         &copy; 2025 msomi.com. All rights reserved.
     </div>
+
+    <!-- --- NEW: Script for the back button --- -->
+    <script>
+        document.getElementById('back-button').addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent the link from navigating to '#'
+            window.history.back(); // Go to the previous page in the browser's history
+        });
+    </script>
 
 </body>
 </html>
